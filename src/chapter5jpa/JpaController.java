@@ -176,7 +176,8 @@ public class JpaController implements Initializable {
         }
         
         //check if student registration course more thane once
-        if(!r.equals(null)&&(r.contains(re.getCourseid())&&r1.contains(re.getSmester()))){
+        //smester and course id not null
+        if((!r.equals(null)&&!r1.equals(null))&&(r.contains(re.getCourseid())&&r1.contains(re.getSmester()))){
             t=true;
         }
        
