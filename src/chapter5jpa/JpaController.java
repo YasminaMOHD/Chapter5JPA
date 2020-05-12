@@ -168,7 +168,7 @@ public class JpaController implements Initializable {
         if(s2.contains(re.getCourseid())){
             check1=true;
         }
-        if(check==true &&check1==true){
+        if((check==true &&check1==true)&&!(tableCourse.getItems().contains(re.getStudentid())&&tableCourse.getItems().contains(re.getStudentid()))){
         EntityManager em=emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(re);
@@ -179,9 +179,11 @@ public class JpaController implements Initializable {
        Alert alert = new Alert(Alert.AlertType.ERROR);
        alert.setTitle("Error Dialog");
        alert.setHeaderText("Look, an Error Dialog");
-       alert.setContentText("student id or course id in correct !");
+       alert.setContentText("student id or course id not exist !");
        alert.showAndWait();  
-        }}
+        }
+    }
+   
 
     @FXML
     private void ShowCourseHandle(ActionEvent event) {
