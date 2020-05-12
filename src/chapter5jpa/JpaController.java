@@ -168,9 +168,11 @@ public class JpaController implements Initializable {
         List<String> r1= em1.createQuery("SELECT r.smester  FROM Registration r WHERE r.studentid= :studentid")
                 .setParameter("studentid", re.getStudentid()).getResultList();
         
+        //check if student id exist in student table
         if(s1.contains(re.getStudentid())){
             check=true;
         }
+        //check if course id exist in course id
         if(s2.contains(re.getCourseid())){
             check1=true;
         }
