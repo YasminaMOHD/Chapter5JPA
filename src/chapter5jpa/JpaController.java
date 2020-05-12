@@ -174,12 +174,13 @@ public class JpaController implements Initializable {
         if(s2.contains(re.getCourseid())){
             check1=true;
         }
+        
+        //check if student registration course more thane once
         if(!r.equals(null)&&(r.contains(re.getCourseid())&&r1.contains(re.getSmester()))){
             t=true;
         }
        
-       
-        
+        //if user regestration another once or ifo not exist in tables
         if((check==true &&check1==true)==false||t==true){
        Alert alert = new Alert(Alert.AlertType.ERROR);
        alert.setTitle("Error Dialog");
