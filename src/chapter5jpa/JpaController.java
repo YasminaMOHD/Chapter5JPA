@@ -103,11 +103,13 @@ public class JpaController implements Initializable {
 
     @FXML
     private void buttonAddHandle(ActionEvent event) {
+        
         Student s = new Student();
         s.setId(TextFieldId.getText());
         s.setName(TextFieldName.getText());
         s.setMajor(TextFieldMajor.getText());
         s.setGrade(Double.parseDouble(TextFieldGrade.getText()));
+        
         EntityManager em = this.emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(s);
@@ -151,16 +153,35 @@ public class JpaController implements Initializable {
 
     @FXML
     private void buttonAddCHandle(ActionEvent event) {
+        boolean check=false;
+        boolean check1=false;
         Registration re=new Registration();
         re.setStudentid(IdStudent.getText());
         re.setCourseid(IdCourse.getText());
         re.setSmester(smester.getText());
+        EntityManager em1=this.emf.createEntityManager();
+        List<String> s1=em1.createQuery("SELECT s.id FROM Student s ").getResultList();
+        List<String> s2=em1.createQuery("SELECT c.id FROM course c ").getResultList();
+        if(s1.contains(re.getStudentid())){
+            check=true;
+        }
+        if(s2.contains(re.getCourseid())){
+            check1=true;
+        }
+        if(check==true &&check1==true){
         EntityManager em=emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(re);
         em.getTransaction().commit();
         em.close();
     }
+        else{
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+       alert.setTitle("Error Dialog");
+       alert.setHeaderText("Look, an Error Dialog");
+       alert.setContentText("student id or course id in correct !");
+       alert.showAndWait();  
+        }}
 
     @FXML
     private void ShowCourseHandle(ActionEvent event) {
