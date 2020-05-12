@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,6 +28,7 @@ import javax.persistence.OneToMany;
 public class Registration implements Serializable  {
    
     @Id 
+    @OneToMany
     private String studentid ;
     @Id 
     private String courseid;
