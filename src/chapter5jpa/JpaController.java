@@ -155,6 +155,7 @@ public class JpaController implements Initializable {
     private void buttonAddCHandle(ActionEvent event) {
         boolean check=false;
         boolean check1=false;
+        boolean t=false;
         Registration re=new Registration();
         re.setStudentid(IdStudent.getText());
         re.setCourseid(IdCourse.getText());
@@ -162,27 +163,37 @@ public class JpaController implements Initializable {
         EntityManager em1=this.emf.createEntityManager();
         List<String> s1=em1.createQuery("SELECT s.id FROM Student s ").getResultList();
         List<String> s2=em1.createQuery("SELECT c.id FROM course c ").getResultList();
+        List<String> r= em1.createQuery("SELECT r.courseid  FROM Registration r WHERE r.studentid= :studentid")
+                .setParameter("studentid", re.getStudentid()).getResultList();
+        List<String> r1= em1.createQuery("SELECT r.smester  FROM Registration r WHERE r.studentid= :studentid")
+                .setParameter("studentid", re.getStudentid()).getResultList();
+        
         if(s1.contains(re.getStudentid())){
             check=true;
         }
         if(s2.contains(re.getCourseid())){
             check1=true;
         }
-        if((check==true &&check1==true)&&!(tableCourse.getItems().contains(re.getStudentid())&&tableCourse.getItems().contains(re.getStudentid()))){
-        EntityManager em=emf.createEntityManager();
+        if(!r.equals(null)&&(r.contains(re.getCourseid())&&r1.contains(re.getSmester()))){
+            t=true;
+        }
+       
+       
+        
+        if((check==true &&check1==true)==false||t==true){
+       Alert alert = new Alert(Alert.AlertType.ERROR);
+       alert.setTitle("Error Dialog");
+       alert.setHeaderText("Look, an Error Dialog");
+       alert.setContentText("student id or course id not exist// or student regestration this course befor !");
+       alert.showAndWait();  
+        
+    }else{
+      EntityManager em=emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(re);
         em.getTransaction().commit();
         em.close();
-    }
-        else{
-       Alert alert = new Alert(Alert.AlertType.ERROR);
-       alert.setTitle("Error Dialog");
-       alert.setHeaderText("Look, an Error Dialog");
-       alert.setContentText("student id or course id not exist !");
-       alert.showAndWait();  
-        }
-    }
+        }  }
    
 
     @FXML

@@ -32,6 +32,7 @@ public class Registration implements Serializable  {
     private String studentid ;
     @Id 
     private String courseid;
+    @Id
     private String smester;
 
     public Registration() {
